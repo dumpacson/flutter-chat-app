@@ -10,24 +10,24 @@ Alsharif Mohammad Marwan Ahmad (1828937)
 Abdelhadi Hadj Sahraoui (1919059)
 
 ## Tasks
-Safwan:
+**Safwan:**
 - Main()
 - 
 - 
 
-Abdelhadi:
+**Abdelhadi:**
 - class
 - 
 - 
 - 
 
-Tawfek:
+**Tawfek:**
 - class
 - 
 - 
 - 
 
-Mohammed:
+**Mohammed:**
 - class
 - 
 - 
