@@ -34,7 +34,7 @@ Mohammed:
 - 
 
 ## Description
-Bus Ticket Registration System where user can reserve a seat, view ticket details & view reserved seats and respective passenger names with the requirements of:
+A Flutter Chat App that uses Firebase Cloud Messaging to allow sending and receiving messages between 2 users:
 1. A simple chat app that allows communication between sender and receiver.
 2. Use a notification to inform the user of the new message received.
 3. The messaging screen should contain input (message) and output (response) on the same screen, like other messaging apps.
