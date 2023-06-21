@@ -11,26 +11,24 @@ Abdelhadi Hadj Sahraoui (1919059)
 
 ## Tasks
 **Safwan:**
-- Main()
-- 
+- main.dart
+- chatpage.dart
 - styles.dart
 - widgets.dart
 
 **Abdelhadi:**
-- class
-- 
+- homepage.dart
 - styles.dart
 - widgets.dart
 
 **Tawfek:**
-- class
-- 
+- notifications.dart
 - styles.dart
 - widgets.dart
 
 **Mohammed:**
-- class
-- 
+- main.dart
+- functions.dart
 - styles.dart
 - widgets.dart
 
