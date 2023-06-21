@@ -25,9 +25,6 @@ class _ChatPageState extends State<ChatPage> {
         backgroundColor: Colors.indigo.shade400,
         title:  Text(widget.name),
         elevation: 0,
-        actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.more_vert))
-        ],
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -39,22 +36,10 @@ class _ChatPageState extends State<ChatPage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  'Chats',
+                  'Chat',
                   style: Styles.h1(),
                 ),
                 const Spacer(),
-                StreamBuilder(
-                  stream: firestore.collection('Users').doc(widget.id).snapshots(),
-                  builder: (context,AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> snapshot) {
-                    return !snapshot.hasData?Container(): Text(
-                      'Last seen : ' + DateFormat('hh:mm a').format(snapshot.data!['date_time'].toDate()),
-                      style: Styles.h1().copyWith(
-                          fontSize: 12,
-                          fontWeight: FontWeight.normal,
-                          color: Colors.white70),
-                    );
-                  }
-                ),
                 const Spacer(),
                 const SizedBox(
                   width: 50,
@@ -101,17 +86,14 @@ class _ChatPageState extends State<ChatPage> {
                                                 snap.data!.docs[i]['sent_by'] ==
                                                     FirebaseAuth.instance.currentUser!.uid,
                                                 snap.data!.docs[i]['message'],
-                                                DateFormat('hh:mm a').format(
-                                                    snap.data!
-                                                        .docs[i]['datetime']
-                                                        .toDate()));
+                                            );
                                           },
                                         );
                                 });
                       } else {
                         return Center(
                           child: Text(
-                            'No conversion found',
+                            'No conversation found',
                             style: Styles.h1()
                                 .copyWith(color: Colors.indigo.shade400),
                           ),
