@@ -13,24 +13,25 @@ Abdelhadi Hadj Sahraoui (1919059)
 **Safwan:**
 - Main()
 - 
+- styles.dart
 - widgets.dart
 
 **Abdelhadi:**
 - class
 - 
-- 
+- styles.dart
 - widgets.dart
 
 **Tawfek:**
 - class
 - 
-- 
+- styles.dart
 - widgets.dart
 
 **Mohammed:**
 - class
 - 
-- 
+- styles.dart
 - widgets.dart
 
 ## Description
