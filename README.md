@@ -13,25 +13,25 @@ Abdelhadi Hadj Sahraoui (1919059)
 **Safwan:**
 - Main()
 - 
-- 
+- widgets.dart
 
 **Abdelhadi:**
 - class
 - 
 - 
-- 
+- widgets.dart
 
 **Tawfek:**
 - class
 - 
 - 
-- 
+- widgets.dart
 
 **Mohammed:**
 - class
 - 
 - 
-- 
+- widgets.dart
 
 ## Description
 A Flutter Chat App that uses Firebase Cloud Messaging to allow sending and receiving messages between 2 users:
