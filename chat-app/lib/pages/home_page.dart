@@ -12,7 +12,8 @@ class HomePage extends StatelessWidget {
     await Auth().signOut();
   }
 
-  void navigateToChatPage(BuildContext context, String userId, String email, String name) {
+  void navigateToChatPage(
+      BuildContext context, String userId, String email, String name) {
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -27,48 +28,70 @@ class HomePage extends StatelessWidget {
 
   Widget _title() {
     return const Text(
-      'Firebase Auth',
+      'MessangerPro',
       style: TextStyle(color: Colors.white),
     );
   }
 
-  Widget _userUid() {
-    return Text(user?.email ?? 'User email');
+  Widget _userEmail() {
+    return Text(
+      'Mohammed Alsharif', // Set user name here
+      style: TextStyle(
+        color: Color.fromRGBO(88, 40, 65, 1), // Set the desired color
+        fontSize: 20,
+        fontWeight: FontWeight.bold,
+      ),
+    );
   }
 
   Widget _signOutButton() {
-    return Align(
-      alignment: Alignment.bottomCenter,
-      child: ElevatedButton(
-        onPressed: signOut,
-        child: const Text(
-          'Sign Out',
-          style: TextStyle(color: Colors.white),
-        ),
-        style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all<Color>(Color(0xFF582841)),
-          foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+    return ElevatedButton(
+      onPressed: signOut,
+      child: const Text(
+        'Sign Out',
+        style: TextStyle(color: Colors.white),
+      ),
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all<Color>(
+            Color.fromRGBO(88, 40, 65, 1)), // Set the desired color
+        foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+        minimumSize: MaterialStateProperty.all<Size>(
+          Size(200, 48), // Increase button size
         ),
       ),
     );
   }
 
-  Widget _chatButton(BuildContext context, String userId, String email, String name) {
+  Widget _buildChatButton(
+      BuildContext context, String userId, String email, String name) {
     if (userId == user?.uid) {
-      // If the button corresponds to the logged-in user, don't show the button
-      return Container();
+      return Container(); // Don't show button for logged-in user
     }
-    return ElevatedButton(
-      onPressed: () {
-        navigateToChatPage(context, userId, email, name);
-      },
-      child: Text(
-        'Chat with $name',
-        style: TextStyle(color: Colors.white),
+    return Container(
+      decoration: BoxDecoration(
+        color: Color.fromRGBO(88, 40, 65, 1), // Set the desired color
+        borderRadius: BorderRadius.circular(8),
       ),
-      style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all<Color>(Color(0xFF582841)),
-        foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+      margin: EdgeInsets.symmetric(vertical: 8),
+      child: ListTile(
+        contentPadding: EdgeInsets.symmetric(horizontal: 16),
+        title: Text(
+          name,
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
+          ),
+        ),
+        trailing: IconButton(
+          onPressed: () {
+            navigateToChatPage(context, userId, email, name);
+          },
+          icon: Icon(
+            Icons.chat_outlined,
+            color: Colors.white,
+          ),
+        ),
       ),
     );
   }
@@ -76,62 +99,76 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (user != null) {
-      // If a user is logged in
       return Scaffold(
         appBar: AppBar(
           title: _title(),
-          backgroundColor: Color(0xFF582841),
+          backgroundColor:
+              Color.fromRGBO(88, 40, 65, 1), // Apply the desired color
         ),
         body: Container(
-          height: double.infinity,
-          width: double.infinity,
-          padding: const EdgeInsets.all(20),
-          color: Color(0xFFEFEFEF),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              _userUid(),
-              SizedBox(height: 20),
-              _chatButton(
-                context,
-                'mYyeyAN4WpSQkeELqSG3oFahU9h2',
-                'ahmadnorsafwan@gmail.com',
-                'Ahmad Safwan',
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Color.fromRGBO(88, 40, 65, 1), // Apply the desired color
+                Colors.indigo,
+              ],
+            ),
+          ),
+          child: Center(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  _userEmail(),
+                  SizedBox(height: 20),
+                  Expanded(
+                    child: ListView(
+                      shrinkWrap: true,
+                      children: <Widget>[
+                        _buildChatButton(
+                          context,
+                          'mYyeyAN4WpSQkeELqSG3oFahU9h2',
+                          'ahmad safwan',
+                          'Ahmad Safwan',
+                        ),
+                        _buildChatButton(
+                          context,
+                          'L6igQ7I3zrMBKPloD2CycczOu0p2',
+                          'mohammedalsharrif7@gmail.com',
+                          'Mohammed Alsharif',
+                        ),
+                        _buildChatButton(
+                          context,
+                          'eHWgoDkMRbc2r51MEIoY1zO33c42',
+                          'tawfikjaf@gmail.com',
+                          'Tawfik',
+                        ),
+                        _buildChatButton(
+                          context,
+                          'IqlNfzQYwIh3mrGoz3wgGcuxhbO2',
+                          'didouhs41@gmail.com',
+                          'Hadi',
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  _signOutButton(),
+                ],
               ),
-              SizedBox(height: 20),
-              _chatButton(
-                context,
-                'L6igQ7I3zrMBKPloD2CycczOu0p2',
-                'mohammedalsharrif7@gmail.com',
-                'Mohammed',
-              ),
-              SizedBox(height: 20),
-              _chatButton(
-                context,
-                'eHWgoDkMRbc2r51MEIoY1zO33c42',
-                'tawfikjaf@gmail.com',
-                'Tawfek',
-              ),
-              SizedBox(height: 20),
-              _chatButton(
-                context,
-                'IqlNfzQYwIh3mrGoz3wgGcuxhbO2',
-                'didouhs41@gmail.com',
-                'Abdelhadi',
-              ),
-              SizedBox(height: 100), // Add space of 100 pixels
-              _signOutButton(),
-            ],
+            ),
           ),
         ),
       );
     } else {
-      // If no user is logged in
       return Scaffold(
         appBar: AppBar(
           title: _title(),
-          backgroundColor: Color(0xFF582841),
+          backgroundColor:
+              Color.fromRGBO(88, 40, 65, 1), // Apply the desired color
         ),
         body: Center(
           child: Text(
