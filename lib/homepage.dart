@@ -105,7 +105,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ],
             ),
-            ChatWidgets.searchBar(open)
           ],
         ),
       ),
