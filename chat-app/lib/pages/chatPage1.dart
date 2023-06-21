@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ChatPage extends StatefulWidget {
   final String email;
@@ -13,8 +11,16 @@ class ChatPage extends StatefulWidget {
 
 class _ChatPageState extends State<ChatPage> {
   final TextEditingController _messageController = TextEditingController();
-  final CollectionReference _messagesCollection =
-      FirebaseFirestore.instance.collection('messages');
+  final List<Message> _messages = [];
+
+  void _sendMessage(String message) {
+    // Create a new message object and add it to the list
+    final newMessage = Message(sender: widget.email, message: message);
+    setState(() {
+      _messages.insert(0, newMessage); // Insert the new message at index 0
+    });
+    _messageController.clear();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,46 +40,39 @@ class _ChatPageState extends State<ChatPage> {
             child: Container(
               color: Colors.white,
               padding: const EdgeInsets.all(20),
-              child: StreamBuilder<QuerySnapshot>(
-                stream: _messagesCollection.orderBy('timestamp', descending: true).snapshots(),
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    final messages = snapshot.data!.docs;
-                    return ListView.builder(
-                      itemCount: messages.length,
+              child: _messages.isEmpty
+                  ? Center(
+                      child: Text(
+                        'No messages sent.',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                    )
+                  : ListView.builder(
+                      itemCount: _messages.length,
                       itemBuilder: (context, index) {
-                        final message = messages[index];
-                        final sender = message['sender'] as String?;
-                        final text = message['text'] as String?;
+                        final message = _messages[index];
                         return Align(
-                          alignment: sender == widget.email
+                          alignment: message.sender == widget.email
                               ? Alignment.bottomRight
                               : Alignment.bottomLeft,
                           child: Container(
                             padding: const EdgeInsets.all(10),
                             margin: const EdgeInsets.symmetric(vertical: 4),
                             decoration: BoxDecoration(
-                              color: sender == widget.email
+                              color: message.sender == widget.email
                                   ? const Color(0xFF582841)
                                   : Colors.grey[300],
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: Text(
-                              text ?? '',
+                              message.message,
                               style: const TextStyle(fontSize: 16, color: Colors.white),
                             ),
                           ),
                         );
                       },
-                      reverse: true,
-                    );
-                  } else {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                },
-              ),
+                      reverse: true, // Reverse the list to display the newer messages at the bottom
+                    ),
             ),
           ),
           Container(
@@ -88,6 +87,9 @@ class _ChatPageState extends State<ChatPage> {
                       hintText: 'Type your message...',
                       border: InputBorder.none,
                     ),
+                    onSubmitted: (message) {
+                      _sendMessage(message);
+                    },
                   ),
                 ),
                 IconButton(
@@ -106,17 +108,11 @@ class _ChatPageState extends State<ChatPage> {
       ),
     );
   }
+}
 
-  void _sendMessage(String message) async {
-    final currentUser = FirebaseAuth.instance.currentUser;
-    if (currentUser != null) {
-      final messageData = {
-        'sender': currentUser.email,
-        'text': message,
-        'timestamp': FieldValue.serverTimestamp(),
-      };
-      await _messagesCollection.add(messageData);
-      _messageController.clear();
-    }
-  }
+class Message {
+  final String sender;
+  final String message;
+
+  Message({required this.sender, required this.message});
 }
