@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterfire_ui/auth.dart';
-import 'package:flutter_chat_app/comps/animated-dialog.dart';
+import 'package:flutter_chat_app/comps/animated_dialog.dart';
 import 'package:flutter_chat_app/comps/styles.dart';
+
+import 'animated-dialog.dart';
 
 class ChatWidgets {
   static Widget card({title, time, subtitle, onTap}) {
@@ -58,7 +60,7 @@ class ChatWidgets {
     );
   }
 
-  static Widget messagesCard(bool check, message, time) {
+  static Widget messagesCard(bool check, message) {
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -83,7 +85,7 @@ class ChatWidgets {
               padding: const EdgeInsets.all(10),
               decoration: Styles.messagesCardStyle(check),
               child: Text(
-                '$message\n\n$time',
+                '$message',
                 style: TextStyle(color: check ? Colors.white : Colors.black),
               ),
             ),
@@ -112,8 +114,9 @@ class ChatWidgets {
       decoration: Styles.messageFieldCardStyle(),
       child: TextField(
         controller: con,
-        decoration: Styles.messageTextFieldStyle(onSubmit: () {
-          onSubmit(con);
+        decoration: Styles.messageTextFieldStyle(onSubmit: ()
+        {
+          onSubmit(con) ;
         }),
       ),
     );
@@ -142,7 +145,7 @@ class ChatWidgets {
                 const Divider(
                   color: Colors.white,
                 ),
-                 ListTile(
+                ListTile(
                   leading: const Icon(Icons.person),
                   title: const Text('Profile'),
                   onTap: (){
@@ -175,9 +178,10 @@ class ChatWidgets {
       margin: const EdgeInsets.all(10),
       decoration: Styles.messageFieldCardStyle(),
       child: TextField(
-       onChanged: onChange,
+        onChanged: onChange,
         decoration: Styles.searchTextFieldStyle(),
       ),
     );
   }
 }
+
