@@ -12,12 +12,14 @@ class HomePage extends StatelessWidget {
     await Auth().signOut();
   }
 
-  void navigateToChatPage(BuildContext context) {
+  void navigateToChatPage(BuildContext context, String userId, String email, String name) {
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => ChatPage(
-          email: 'ahmadnorsafwan@gmail.com',
+          userId: userId,
+          email: email,
+          name: name,
         ),
       ),
     );
@@ -51,13 +53,17 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget _chatButton(BuildContext context) {
+  Widget _chatButton(BuildContext context, String userId, String email, String name) {
+    if (userId == user?.uid) {
+      // If the button corresponds to the logged-in user, don't show the button
+      return Container();
+    }
     return ElevatedButton(
       onPressed: () {
-        navigateToChatPage(context);
+        navigateToChatPage(context, userId, email, name);
       },
-      child: const Text(
-        'Chat with Ahmad',
+      child: Text(
+        'Chat with $name',
         style: TextStyle(color: Colors.white),
       ),
       style: ButtonStyle(
@@ -69,29 +75,71 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: _title(),
-        backgroundColor: Color(0xFF582841),
-      ),
-      body: Container(
-        height: double.infinity,
-        width: double.infinity,
-        padding: const EdgeInsets.all(20),
-        color: Color(0xFFEFEFEF),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            _userUid(),
-            SizedBox(height: 20),
-            _chatButton(context),
-            SizedBox(height: 100), // Add space of 100 pixels
-            _signOutButton(),
-          ],
+    if (user != null) {
+      // If a user is logged in
+      return Scaffold(
+        appBar: AppBar(
+          title: _title(),
+          backgroundColor: Color(0xFF582841),
         ),
-      ),
-    );
+        body: Container(
+          height: double.infinity,
+          width: double.infinity,
+          padding: const EdgeInsets.all(20),
+          color: Color(0xFFEFEFEF),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              _userUid(),
+              SizedBox(height: 20),
+              _chatButton(
+                context,
+                'mYyeyAN4WpSQkeELqSG3oFahU9h2',
+                'ahmadnorsafwan@gmail.com',
+                'Ahmad Safwan',
+              ),
+              SizedBox(height: 20),
+              _chatButton(
+                context,
+                'L6igQ7I3zrMBKPloD2CycczOu0p2',
+                'mohammedalsharrif7@gmail.com',
+                'Mohammed',
+              ),
+              SizedBox(height: 20),
+              _chatButton(
+                context,
+                'eHWgoDkMRbc2r51MEIoY1zO33c42',
+                'tawfikjaf@gmail.com',
+                'Tawfek',
+              ),
+              SizedBox(height: 20),
+              _chatButton(
+                context,
+                'IqlNfzQYwIh3mrGoz3wgGcuxhbO2',
+                'didouhs41@gmail.com',
+                'Abdelhadi',
+              ),
+              SizedBox(height: 100), // Add space of 100 pixels
+              _signOutButton(),
+            ],
+          ),
+        ),
+      );
+    } else {
+      // If no user is logged in
+      return Scaffold(
+        appBar: AppBar(
+          title: _title(),
+          backgroundColor: Color(0xFF582841),
+        ),
+        body: Center(
+          child: Text(
+            'Please log in to access the home page.',
+            style: TextStyle(fontSize: 16),
+          ),
+        ),
+      );
+    }
   }
 }
-
